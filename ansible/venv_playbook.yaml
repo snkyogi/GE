@@ -1,0 +1,43 @@
+---
+- name: Setup Python Virtual Environment and Install Requirements
+  hosts: your_target_host
+  become: yes  # You may need to become root or use sudo, adjust as necessary
+  
+  vars:
+    custom_python_path: "/path/to/your/custom/python"  # Replace with your custom Python interpreter path
+    venv_path: "/path/to/your/venv"
+    requirements_file: "/path/to/your/requirements.txt"
+
+  tasks:
+    - name: Create Python Virtual Environment
+      command:
+        cmd: "{{ custom_python_path }} -m venv {{ venv_path }}"
+      args:
+        creates: "{{ venv_path }}"
+        
+    - name: Activate the Virtual Environment
+      shell: "source {{ venv_path }}/bin/activate"
+      args:
+        executable: /bin/bash
+      environment:
+        PATH: "{{ custom_python_path }}:$PATH"
+        
+    - name: Install Pip
+      ansible.builtin.pip:
+        name: pip
+        executable: "{{ venv_path }}/bin/python"
+        state: latest
+      environment:
+        PATH: "{{ venv_path }}/bin:$PATH"
+
+    - name: Install Requirements
+      ansible.builtin.pip:
+        requirements: "{{ requirements_file }}"
+        executable: "{{ venv_path }}/bin/python"
+      environment:
+        PATH: "{{ venv_path }}/bin:$PATH"
+
+    - name: Deactivate the Virtual Environment
+      command: deactivate
+      args:
+        executable: /bin/bash
