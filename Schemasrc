@@ -1,1 +1,53 @@
-{'sources':[{'name':'ent_dev','type':'snowflake','vault_configuration':{'namespace':'dev-do','mount_point':'do','path':'ent/edw'},'create_temp_table':False,"assets':[["asset_name':'nacmas_full','type":"table",adb_nacmas_full','data_track_ids':["feed_id"],"batches':[{"col":"edi_business_day","val':datetime.date(2021,7,1),'ar'name':'test_sdlradb002B:BUSINESSDATE'}]},{'asset_name":"nonpersonalcust','type':'table','name':'test_sdlrcdb005_cdb_nonpersonalcust','data_track_ids':['feed_id'],"batches":[['col":"edibusiness_day","val":datetime.date(2021,7,1),'arg':'BUSINESSDATE'}]}]}]}
+{
+  "type": "object",
+  "properties": {
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "type": {"type": "string"},
+          "vault_configuration": {
+            "type": "object",
+            "properties": {
+              "namespace": {"type": "string"},
+              "mount_point": {"type": "string"},
+              "path": {"type": "string"}
+            },
+            "required": ["namespace", "mount_point", "path"]
+          },
+          "create_temp_table": {"type": "boolean"},
+          "assets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "asset_name": {"type": "string"},
+                "type": {"type": "string"},
+                "name": {"type": "string"},
+                "data_track_ids": {"type": "array", "items": {"type": "string"}},
+                "batches": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "col": {"type": "string"},
+                      "val": {"type": "string"},
+                      "ar": {"type": "string"},
+                      "name": {"type": "string"}
+                    },
+                    "required": ["col", "val", "ar", "name"]
+                  }
+                }
+              },
+              "required": ["asset_name", "type", "name", "data_track_ids", "batches"]
+            }
+          }
+        },
+        "required": ["name", "type", "vault_configuration", "create_temp_table", "assets"]
+      }
+    }
+  },
+  "required": ["sources"]
+}
