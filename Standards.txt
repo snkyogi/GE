@@ -1,0 +1,67 @@
+Indentation and Formatting:
+
+Use 4 spaces for indentation.
+Follow PEP 8 style guide for code formatting.
+Naming Conventions:
+
+Use descriptive variable and function names.
+Follow snake_case for variables and functions, CamelCase for classes.
+Imports:
+
+Import standard libraries first, followed by third-party libraries, and then local modules.
+Avoid using wildcard imports.
+Comments and Documentation:
+
+Use comments sparingly for explaining complex parts of code.
+Provide docstrings for modules, classes, and functions.
+Function Length:
+
+Keep functions short and focused on a single task.
+Error Handling:
+
+Implement proper error handling using try-except blocks.
+Avoid using bare except clauses.
+Code Duplication:
+
+Avoid duplicating code; refactor common functionality into functions or modules.
+Testing:
+
+Write unit tests for all functions and methods.
+Use meaningful test names and ensure good test coverage.
+Logging:
+
+Use logging instead of print statements for debugging.
+Configure logging levels appropriately.
+Version Control:
+
+Follow a consistent branching strategy.
+Write meaningful commit messages.
+Security:
+
+Be aware of security best practices.
+Avoid hardcoding sensitive information.
+Performance:
+
+Optimize code for performance only when necessary.
+Use appropriate data structures and algorithms.
+Dependencies:
+
+Clearly document project dependencies.
+Regularly update dependencies to their latest versions.
+Code Reviews:
+
+Conduct regular code reviews within the team.
+Provide constructive feedback and maintain a positive environment.
+Continuous Integration:
+
+Set up CI/CD pipelines for automated testing.
+Ensure code quality checks in the pipeline.
+Remember to adapt these guidelines to your team's specific needs and project requirements. Regularly revisit and update the coding standards as your project evolves.
+
+
+
+
+
+Message ChatGPT…
+
+ChatGPT can make mistakes. Consider checking important 
