@@ -1,0 +1,111 @@
+import React from 'react';
+import Form from 'react-jsonschema-form';
+
+const jsonData = [
+  {
+    "source_name": "EDP ORACLE",
+    "type": "sql",
+    "database": "DOGz",
+    "schema": "EDI_TPL_OWNER",
+    "vault_configuration": [
+      {
+        "type": "aws",
+        "connection_details": {
+          "secret_key": "abracadabra"
+        }
+      },
+      {
+        "type": "hashicorp",
+        "connection_details": {
+          "namespace": "de",
+          "mount point": "do",
+          "path": "my_path"
+        }
+      }
+    ],
+    "assets": [
+      {
+        "asset_name": "TP_AVSET",
+        "type": "table assets",
+        "table_name": "TPLATED",
+        "batches": [
+          {
+            "col": "E_sz",
+            "val": 26
+          },
+          {
+            "col": "E_RN_I",
+            "val": 98337
+          }
+        ]
+      }
+    ]
+  }
+];
+
+const schema = {
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      source_name: { type: 'string' },
+      type: { type: 'string' },
+      database: { type: 'string' },
+      schema: { type: 'string' },
+      vault_configuration: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            type: { type: 'string' },
+            connection_details: {
+              type: 'object',
+              properties: {
+                secret_key: { type: 'string' },
+                namespace: { type: 'string' },
+                'mount point': { type: 'string' },
+                path: { type: 'string' }
+              }
+            }
+          }
+        }
+      },
+      assets: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            asset_name: { type: 'string' },
+            type: { type: 'string' },
+            table_name: { type: 'string' },
+            batches: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  col: { type: 'string' },
+                  val: { type: 'number' }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+const uiSchema = {};
+
+const JsonForm = () => {
+  return (
+    <Form
+      schema={schema}
+      uiSchema={uiSchema}
+      formData={jsonData}
+      onChange={(data) => console.log('Form data:', data)}
+    />
+  );
+};
+
+export default JsonForm;
