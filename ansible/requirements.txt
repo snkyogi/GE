@@ -1,4 +1,0 @@
-great-expectations==0.17.22
-sqlalchemy
-snowflake-connector-python
-snowflake-sqlalchemy
