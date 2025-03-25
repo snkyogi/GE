@@ -1,0 +1,44 @@
+def decode_comp3(binary_value: bytes, subtype: str) -> float:
+    """
+    Decodes a COMP-3 (Packed Decimal) value based on the given COBOL subtype.
+    
+    Args:
+        binary_value (bytes): The packed decimal bytes.
+        subtype (str): The COBOL numeric picture clause (e.g., 'S9(09)', 'S9(13)V9(2)').
+        
+    Returns:
+        float: The decoded numeric value.
+    """
+    import struct
+    
+    # Extract total digits and scale from subtype
+    import re
+    match = re.match(r"S9\((\d+)\)(?:V9\((\d+)\))?", subtype)
+    if not match:
+        raise ValueError(f"Unsupported subtype format: {subtype}")
+    
+    int_digits = int(match.group(1))
+    decimal_digits = int(match.group(2)) if match.group(2) else 0
+    total_digits = int_digits + decimal_digits
+
+    # Unpack the packed decimal value
+    unpacked = []
+    for byte in binary_value:
+        unpacked.append(byte >> 4)  # High nibble
+        unpacked.append(byte & 0x0F)  # Low nibble
+    
+    # The last nibble is the sign
+    sign_nibble = unpacked.pop()
+    sign = -1 if sign_nibble in {0xD, 0xB} else 1  # C or F is positive, D or B is negative
+    
+    # Convert to number
+    num = int("".join(map(str, unpacked)))
+    num = num / (10 ** decimal_digits) if decimal_digits > 0 else num
+    
+    return sign * num
+
+# Example usage
+binary_data = b'\x00\x00\x00\x00|'  # Sample packed decimal data
+subtype = 'S9(09)'  # Example COBOL picture clause
+print(decode_comp3(binary_data, subtype))
+
