@@ -1,0 +1,71 @@
+{
+  "visualizations": {
+    "viz_1": {
+      "type": "splunk.singlevalue",
+      "options": {
+        "trellis.enabled": true,
+        "trellis.size": "medium",
+        "trellis.splitBy": "oprec-name",
+        "showSparkline": false,
+        "showTrendIndicator": false,
+        "colorMode": "block",
+        "colorBy": "field",
+        "colorMapping": {
+          "green": "#28a745",
+          "red": "#dc3545"
+        }
+      },
+      "dataSources": {
+        "primary": "ds_oprec"
+      },
+      "title": "OPREC Records (Colored by Status)"
+    }
+  },
+  "dataSources": {
+    "ds_oprec": {
+      "type": "ds.search",
+      "options": {
+        "query": "your_base_search_here | search oprec-type=\"$oprectype$\" | eval status_color=if(oprec-status==\"success\", \"green\", \"red\") | table oprec-name, oprec-status, status_color",
+        "queryParameters": {
+          "earliest": "-15m",
+          "latest": "now"
+        }
+      },
+      "name": "Filtered OPREC Records"
+    }
+  },
+  "inputs": {
+    "input_1": {
+      "type": "input.dropdown",
+      "options": {
+        "items": [
+          { "label": "2a", "value": "2a" },
+          { "label": "2b", "value": "2b" },
+          { "label": "3", "value": "3" },
+          { "label": "4", "value": "4" }
+        ],
+        "defaultValue": "2a",
+        "token": "oprectype",
+        "label": "Select Oprec Type"
+      }
+    }
+  },
+  "layout": {
+    "type": "absolute",
+    "options": {},
+    "structure": [
+      {
+        "item": "input_1",
+        "type": "input",
+        "position": { "x": 20, "y": 20, "w": 240, "h": 50 }
+      },
+      {
+        "item": "viz_1",
+        "type": "viz",
+        "position": { "x": 20, "y": 100, "w": 1000, "h": 400 }
+      }
+    ]
+  },
+  "description": "Interactive Trellis Layout with Color-coded Status",
+  "title": "OPREC Trellis Dashboard"
+}
